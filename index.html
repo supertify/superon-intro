@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superon 프로젝트 소개</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Visualization & Content Choices: 
+        - Overview (Inform): An HTML/CSS mock-up of the TikTok interface was created to provide immediate visual context. The core process is represented as a simple, animated HTML flow diagram for clarity.
+        - System (Organize/Inform): An interactive HTML/CSS flow diagram was chosen over a static image. Users click on a stage (e.g., 'LangChain') to reveal detailed information in a separate panel. This 'click-to-reveal' interaction (JS-driven) encourages exploration and reduces initial cognitive load.
+        - Roadmap (Change/Compare): Current tasks are presented as an interactive checklist. A Chart.js doughnut chart visualizes the completion status (Goal: Inform), providing a quick-glance summary. Future plans are laid out in cards (HTML/CSS) for easy comparison. This combination provides both detailed and high-level views of project progress.
+        - Library/Method: Chart.js for the progress chart. Vanilla JS for all interactions (tab navigation, diagram clicks). Tailwind CSS for layout and styling. -->
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .tab-active { border-bottom: 2px solid #8B5CF6; color: #6D28D9; font-weight: 500; }
+        .tab-inactive { border-bottom: 2px solid transparent; color: #6B7280; }
+        .flow-step { transition: all 0.3s ease-in-out; }
+        .flow-step:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .task-item-done { text-decoration: line-through; color: #9CA3AF; }
+        .card { transition: all 0.3s ease-in-out; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .chart-container { position: relative; width: 100%; max-width: 320px; margin-left: auto; margin-right: auto; height: 320px; max-height: 400px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-violet-800">Superon</h1>
+            <p class="mt-3 text-lg text-slate-600">AI 기반 버추얼 캐릭터 자동화 라이브 플랫폼</p>
+        </header>
+
+        <nav class="mb-8 border-b border-slate-200">
+            <ul class="flex justify-center -mb-px">
+                <li><button class="nav-tab text-lg px-4 py-3 tab-active" onclick="showTab('overview')">개요</button></li>
+                <li><button class="nav-tab text-lg px-4 py-3 tab-inactive" onclick="showTab('system')">시스템</button></li>
+                <li><button class="nav-tab text-lg px-4 py-3 tab-inactive" onclick="showTab('roadmap')">로드맵</button></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div id="overview" class="tab-content">
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 text-violet-700">Superon 이란?</h2>
+                    <p class="text-slate-600 mb-8">
+                        Superon은 AI로 구동되는 가상의 캐릭터가 TikTok, Youtube 등 글로벌 플랫폼에서 팬들과 실시간으로 소통하고 전세계 팬을 얻는 혁신적인 라이브 스트리밍 솔루션입니다. 사용자의 채팅에 실시간으로 반응하며, 감정에 맞는 표정과 목소리로 생동감 넘치는 상호작용을 제공하여 새로운 팬 경험을 만들어냅니다.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="bg-slate-100 p-6 rounded-lg">
+                            <h3 class="font-semibold text-xl mb-4 text-center">핵심 동작 원리</h3>
+                            <div class="space-y-4">
+                                <div class="flow-step flex items-center bg-white p-4 rounded-lg shadow-sm">
+                                    <span class="text-3xl mr-4">💬</span>
+                                    <div>
+                                        <h4 class="font-bold">1. Super Chat 입력</h4>
+                                        <p class="text-sm text-slate-500">팬이 라이브 중 채팅을 입력합니다.</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center"><span class="text-2xl text-violet-500">↓</span></div>
+                                <div class="flow-step flex items-center bg-white p-4 rounded-lg shadow-sm">
+                                    <span class="text-3xl mr-4">🤖</span>
+                                    <div>
+                                        <h4 class="font-bold">2. AI 응답 생성</h4>
+                                        <p class="text-sm text-slate-500">AI가 캐릭터의 설정에 맞춰 응답을 생성합니다.</p>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center"><span class="text-2xl text-violet-500">↓</span></div>
+                                <div class="flow-step flex items-center bg-white p-4 rounded-lg shadow-sm">
+                                    <span class="text-3xl mr-4">🎭</span>
+                                    <div>
+                                        <h4 class="font-bold">3. 실시간 스트리밍</h4>
+                                        <p class="text-sm text-slate-500">감정 기반 애니메이션과 음성으로 송출합니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative w-full max-w-sm mx-auto h-[550px] bg-slate-900 rounded-[40px] border-[10px] border-slate-800 shadow-2xl overflow-hidden">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 bg-slate-800 rounded-b-xl"></div>
+                            <img src="https://placehold.co/400x600/94A3B8/FFFFFF?text=캐릭터+이미지" alt="캐릭터 일러스트" class="w-full h-full object-cover opacity-50">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                            <div class="absolute top-4 left-4 flex items-center gap-2">
+                                <span class="w-10 h-10 bg-violet-500 rounded-full"></span>
+                                <span class="text-white font-bold">Superon_AI</span>
+                            </div>
+                             <div class="absolute top-4 right-4 bg-red-500 text-white text-xs px-2 py-1 rounded-md">LIVE</div>
+                            <div class="absolute bottom-0 left-0 p-4 w-full text-white">
+                                <div class="text-sm space-y-2">
+                                    <p><span class="font-semibold text-green-400">User123:</span> 안녕하세요!</p>
+                                    <p><span class="font-semibold text-violet-400">Superon_AI:</span> 반갑습니다! 무엇이 궁금하신가요?</p>
+                                    <p><span class="font-semibold text-amber-400">Fan456:</span> 오늘 운세 알려주세요!</p>
+                                </div>
+                                <div class="mt-3 flex gap-2">
+                                    <input type="text" placeholder="채팅 입력..." class="flex-grow bg-slate-700/50 rounded-full px-4 py-2 text-sm focus:outline-none">
+                                    <button class="bg-violet-500 rounded-full px-4 py-2 text-sm">전송</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="system" class="tab-content hidden">
+                 <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 text-violet-700">시스템 아키텍처</h2>
+                    <p class="text-slate-600 mb-8">
+                        Superon은 여러 모듈이 유기적으로 연결되어 사용자의 입력을 받아 실시간으로 반응을 생성하고 송출합니다. 아래 흐름도의 각 단계를 클릭하여 해당 모듈의 상세 역할을 확인해보세요.
+                    </p>
+                    <div class="lg:flex lg:gap-8">
+                        <div class="lg:w-1/2 mb-8 lg:mb-0">
+                             <h3 class="font-semibold text-xl mb-4 text-center">전체 동작 흐름</h3>
+                            <div class="space-y-2">
+                                <div id="flow-step-1" class="flow-step p-3 border-2 border-transparent rounded-lg cursor-pointer" onclick="showModuleDetail(1)">
+                                    <p class="text-center font-medium">💬 유저 Super Chat 입력</p>
+                                </div>
+                                <div class="flex justify-center text-violet-400 font-bold">↓</div>
+                                <div id="flow-step-2" class="flow-step p-3 border-2 border-transparent rounded-lg cursor-pointer" onclick="showModuleDetail(2)">
+                                    <p class="text-center font-medium">🧠 LangChain 응답 생성</p>
+                                </div>
+                                <div class="flex justify-center text-violet-400 font-bold">↓</div>
+                                <div id="flow-step-3" class="flow-step p-3 border-2 border-transparent rounded-lg cursor-pointer" onclick="showModuleDetail(3)">
+                                    <p class="text-center font-medium">🎭 감정 분석 (emotion_tag)</p>
+                                </div>
+                                <div class="flex justify-center text-violet-400 font-bold">↓</div>
+                                <div id="flow-step-4" class="flow-step p-3 border-2 border-transparent rounded-lg cursor-pointer" onclick="showModuleDetail(4)">
+                                    <p class="text-center font-medium">🎙️ Live2D 애니메이션 + TTS 음성 생성</p>
+                                </div>
+                                <div class="flex justify-center text-violet-400 font-bold">↓</div>
+                                <div id="flow-step-5" class="flow-step p-3 border-2 border-transparent rounded-lg cursor-pointer" onclick="showModuleDetail(5)">
+                                    <p class="text-center font-medium">📺 OBS + TikTok Live 송출</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2 bg-slate-50 rounded-lg p-6">
+                            <h3 class="font-semibold text-xl mb-4 text-center">모듈 상세 정보</h3>
+                            <div id="module-details">
+                                <p class="text-center text-slate-500">위 흐름도에서 단계를 선택하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="roadmap" class="tab-content hidden">
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold mb-4 text-violet-700">프로젝트 로드맵</h2>
+                     <p class="text-slate-600 mb-8">
+                        Superon은 지속적인 기술 통합과 기능 확장을 통해 발전하고 있습니다. 현재 주요 과제들의 진행 상황과 앞으로의 확장 계획을 통해 프로젝트의 미래를 확인해보세요.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-semibold text-xl mb-4">현재 과제 및 진행상황</h3>
+                            <div class="mb-6 chart-container">
+                                <canvas id="progressChart"></canvas>
+                            </div>
+                            <ul class="space-y-3">
+                                <li class="task-item-done">✅ LangChain → 감정 분석 → 애니메이션 매핑까지 통합 테스트</li>
+                                <li>🛠️ emotion_tag → motion_tag 매핑 등록 필요 (Live2D)</li>
+                                <li>🔁 OBS websocket 연동 (감정 기반 모션 자동화)</li>
+                                <li>💾 LangSmith memory 기반 응답 지속성 검증 필요</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-xl mb-4">향후 확장 전략</h3>
+                            <div class="space-y-4">
+                               <div class="card bg-slate-50 p-4 rounded-lg shadow-sm">
+                                   <h4 class="font-bold text-violet-600">📈 반복 유저 맞춤형 응답</h4>
+                                   <p class="text-sm text-slate-500">기억 기반 응답 강화를 통해 팬과의 유대감을 높입니다.</p>
+                               </div>
+                               <div class="card bg-slate-50 p-4 rounded-lg shadow-sm">
+                                   <h4 class="font-bold text-violet-600">🎭 다양한 캐릭터 테마 확장</h4>
+                                   <p class="text-sm text-slate-500">사주, 꿈풀이, 궁합 등 새로운 테마를 도입합니다.</p>
+                               </div>
+                               <div class="card bg-slate-50 p-4 rounded-lg shadow-sm">
+                                   <h4 class="font-bold text-violet-600">💬 다국어 대응 및 글로벌 확장</h4>
+                                   <p class="text-sm text-slate-500">글로벌 시장 진출을 위한 다국어 지원을 준비합니다.</p>
+                               </div>
+                               <div class="card bg-slate-50 p-4 rounded-lg shadow-sm">
+                                   <h4 class="font-bold text-violet-600">💰 고액 Super Chat 차등 응답</h4>
+                                   <p class="text-sm text-slate-500">리치 UX를 제공하여 새로운 수익 모델을 창출합니다.</p>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.nav-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function showTab(tabName) {
+            tabs.forEach(tab => {
+                const isActive = tab.getAttribute('onclick').includes(tabName);
+                tab.classList.toggle('tab-active', isActive);
+                tab.classList.toggle('tab-inactive', !isActive);
+            });
+            tabContents.forEach(content => {
+                content.classList.toggle('hidden', content.id !== tabName);
+            });
+        }
+
+        const moduleData = {
+            1: { name: '입력', role: '유저가 Super Chat을 통해 실시간으로 메시지를 전송하는 단계입니다.' },
+            2: { name: 'LangChain', role: '캐릭터의 고유한 세계관과 성격에 기반하여 사용자의 질문에 대한 응답을 생성합니다. 사주, 일반 질문 등 다양한 종류의 응답을 처리합니다.' },
+            3: { name: '감정 분류기', role: 'LangChain이 생성한 텍스트를 분석하여 응답에 내포된 핵심 감정(예: 기쁨, 슬픔, 놀람)을 분류하고 `emotion_tag`를 부여합니다.' },
+            4: { name: '애니메이션 & 음성', role: '분류된 `emotion_tag`에 따라 Live2D 모델의 모션을 변환하고, TTS(Text-to-Speech) 엔진을 통해 캐릭터의 목소리로 음성을 생성합니다.' },
+            5: { name: '송출', role: 'OBS 자동화 스크립트를 통해 생성된 애니메이션과 음성을 실시간으로 장면 전환하고 TikTok Live 플랫폼으로 최종 송출합니다.' },
+            6: { name: 'Supabase', role: '사용자 정보, 캐릭터 프로필, 대화 기록 등 모든 데이터를 저장하고 관리하는 백엔드 데이터베이스 역할을 합니다.' }
+        };
+
+        let currentActiveStep = null;
+
+        function showModuleDetail(step) {
+            const detailContainer = document.getElementById('module-details');
+            const data = moduleData[step];
+
+            if (currentActiveStep) {
+                document.getElementById(`flow-step-${currentActiveStep}`).classList.remove('bg-violet-100', 'border-violet-400');
+            }
+            
+            document.getElementById(`flow-step-${step}`).classList.add('bg-violet-100', 'border-violet-400');
+            currentActiveStep = step;
+
+            if (data) {
+                detailContainer.innerHTML = `
+                    <div class="bg-white p-4 rounded-lg shadow-inner">
+                        <h4 class="font-bold text-lg text-violet-700 mb-2">${data.name}</h4>
+                        <p class="text-slate-600">${data.role}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        showModuleDetail(2);
+
+        const progressData = {
+            labels: ['완료', '진행 필요'],
+            datasets: [{
+                label: '현재 과제 진행률',
+                data: [1, 3],
+                backgroundColor: ['#8B5CF6', '#E5E7EB'],
+                borderColor: ['#FFFFFF', '#FFFFFF'],
+                borderWidth: 2,
+                hoverOffset: 4
+            }]
+        };
+
+        const progressConfig = {
+            type: 'doughnut',
+            data: progressData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: '현재 과제 진행률 (25%)',
+                        font: { size: 16 }
+                    }
+                }
+            },
+        };
+
+        window.onload = function() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            new Chart(ctx, progressConfig);
+        };
+    </script>
+
+</body>
+</html>
+
